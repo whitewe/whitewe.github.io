@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Acmen</title>
   
   
   <link href="/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>http://yoursite.com/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>William White</name>
     
   </author>
   
@@ -30,7 +30,6 @@
       
       
         &lt;p&gt;67我要请你吃小龙虾！！！欢迎关注作者博客[1]: &lt;a href=&quot;https://www.acmen.club/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.acmen.club/&lt;/a&gt;&lt;/p&gt;
-
       
     
     </summary>
