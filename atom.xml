@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Acmen</title>
+  <title>爱健身，爱代码</title>
   
-  <subtitle>Stay foolish, stay hungry</subtitle>
+  <subtitle>健身改变自我，代码改变世界</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
