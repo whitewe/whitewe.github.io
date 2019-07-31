@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[手撕单例模式]]></title>
+    <url>%2F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%2F%E6%89%8B%E6%92%95%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[单例模式是设计模式里面相对比较简单的一种模式，这里的简单是说单例模式的代码逻辑简单，但深究起来，它里面涉及到的知识还是很多的。单例模式有很多种实现方式，有线程不安全的单例模式，有加锁单例模式，有双重检查加锁单例模式，有基于volatile的双重检查加锁单例模式，有基于类初始化的单例模式。那么这么多种单例模式都有什么区别呢？下面，我们对这些单例模式进行一一分析。线程不安全的单例模式线程不安全的单例模式是单例模式最简单的实现方式，这种实现方式只推荐用来对单例模式进行理解，不推荐用于应用程序的开发中（单线程程序可以）。123456789101112131415161718192021222324/** * 非线程安全的单例模式实现 */public class UnsafeSingleton &#123; // 单例实例 private static UnsafeSingleton singletonInstance; // 构造方法私有化，禁止外部创建单例类 private UnsafeSingleton()&#123; &#125; // 获取单例对象 public static UnsafeSingleton getSingletonInstance()&#123; // 如果单例对象还没有创建，则创建，否则直接返回已创建的单例对象 if(singletonInstance==null)&#123; // 多线程情况下这里会造成多个线程创建新对象。同时，会造成对象逃逸问题（更详细的分析在下面），所以这种单例模式是线程不安全的 return new UnsafeSingleton(); &#125; else &#123; return singletonInstance; &#125; &#125;&#125;]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>手撕代码</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[手撕LRUCache]]></title>
     <url>%2F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%2F%E6%89%8B%E6%92%95LRUCache%2F</url>
     <content type="text"><![CDATA[LRUCache中文名称最近最少使用缓存，该类型缓存用途广泛，主要用于保存近期经常使用的数据。LRUCache的实现方式多种多样，但效率最高的只有一种，那就是LinkedList与HashMap配合实现LRUCache。LRUCache实现原理分析众所周知，LRUCache的一个最大特点就是缓存里的数据永远都是最近访问过的数据。这样设计是因为计算机内部的数据访问具有空间局部性。如果把最近访问过得数据放到缓存，那么缓存命中的几率会很大，这也大大提升了程序的运行效率。那么，底层该采用那种数据结构才能实现LRUCache缓存呢？缓存的基本功能是数据访问，我们为了提高数据访问效率一般都采用HashMap结构保存数据。同时，为了保存数据的访问状态信息，我们采用链表来保证数据永远是最近访问过的(每次访问数据后将其移动至链表头结点)。这里为了操作方便，采用带首尾节点的双链表实现数据状态保存。当然，Cache是很宝贵的资源，因为它们的存储空间一般都不大。所以还得设置变量标识缓存总容量大小以及当前数据大小。当缓存满时，淘汰最近最少访问的数据，即链表尾部的数据(因为我们每次添加或访问数据后，该数据都会被放至表头)。LRUCache代码实现123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081import java.util.HashMap;import java.util.Map;public class LRUCache &#123; private Map&lt;Integer,DLinkedNode&gt; map; private DLinkedNode head; private DLinkedNode tail; private int capacity; private int count; public LRUCache(int capacity)&#123; map = new HashMap&lt;&gt;(); head = new DLinkedNode(); head.prev = null; tail = new DLinkedNode(); tail.next = null; tail.prev = head; head.next = tail; this.capacity = capacity; count = 0; &#125; public int get(int key)&#123; DLinkedNode node = map.get(key); if(node!=null)&#123; moveToHead(node); return node.value; &#125; return -1; &#125; public void put(int key, int value)&#123; DLinkedNode node = map.get(key); if(node==null)&#123; DLinkedNode newNode = new DLinkedNode(); newNode.key = key; newNode.value = value; map.put(key,newNode); addToHead(newNode); count++; if(count&gt;capacity)&#123; removeTail(); count--; &#125; &#125;else&#123; node.value = value; moveToHead(node); &#125; &#125; private void removeTail()&#123; remove(tail.prev); &#125; private void remove(DLinkedNode node)&#123; node.prev.next = node.next; node.next.prev = node.prev; node.prev = null; node.next = null; &#125; private void addToHead(DLinkedNode node)&#123; node.next = head.next; node.prev = head; head.next = node; node.next.prev = node; &#125; private void moveToHead(DLinkedNode node)&#123; remove(node); addToHead(node); &#125; class DLinkedNode&#123; int key; int value; DLinkedNode prev; DLinkedNode next; &#125;&#125;]]></content>
