@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://acmen.club/"/>
-  <updated>2019-08-04T15:52:39.430Z</updated>
+  <updated>2019-08-14T15:00:05.423Z</updated>
   <id>http://acmen.club/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>二叉树相关算法</title>
+    <link href="http://acmen.club/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95/"/>
+    <id>http://acmen.club/数据结构与算法/二叉树相关算法/</id>
+    <published>2019-08-14T14:46:43.000Z</published>
+    <updated>2019-08-14T15:00:05.423Z</updated>
+    
+    <content type="html"><![CDATA[<p>树是计算机领域经常用到的一种数据结构，因为树的定义是递归的，因此，树相关的算法也大都设计到递归求解。下面，我们针对树的常见算法进行一一解析。</p><h1 id="根据二叉树的前序遍历序列与中序遍历序列构建二叉树"><a href="#根据二叉树的前序遍历序列与中序遍历序列构建二叉树" class="headerlink" title="根据二叉树的前序遍历序列与中序遍历序列构建二叉树"></a>根据二叉树的前序遍历序列与中序遍历序列构建二叉树</h1><h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p>给出一颗二叉树的前序遍历与中序遍历序列，重构出这颗二叉树。</p><p>用例示例：</p><blockquote><p>preorder = [3,9,20,15,7]<br>inorder = [9,3,15,20,7]</p></blockquote><p>返回二叉树:</p><blockquote><p>3<br>/ \<br>9 20<br>/ \<br>15 7</p></blockquote><h2 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h2><p>前序遍历的顺序是root-&gt;left-&gt;right，根据前序遍历可以确定根节点位置，但无法知道左子树与右子树的界限。而中序遍历的顺序left-&gt;root-&gt;right可根据根节点的位置确定左子树与右子树的界限。两者结合便可确定唯一的一颗二叉树。</p><h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><p>‘’’java<br>/*<em><br>\</em> 树节点定义如下：.<br>* public class TreeNode {<br>* int val;<br>* TreeNode left;<br>* TreeNode right;<br>* TreeNode(int x) { val = x; }<br>* }<br>*/<br>class Solution {<br>public TreeNode buildTree(int[] preorder, int[] inorder) {<br>if(preOrder==null||inOrder==null) return null;<br>return buildTree(preorder,inorder,0,0,inorder.length-1);<br>}</p><pre><code>// 采用递归的方式构建二叉树。递归构建二叉树过程中我们需要知道先序序列中当前根节点// 的位置preIndex,中序遍历中当前子树所有节点的位置区间private TreeNode buildTree(int[] preorder, int[] inorder, int preIndex,inStart,inEnd){    // 递归出口。当根节点位置大于先序序列长度或中序序列起始位置大于结束位置时，    // 说明当前节点左子树或右子树为空，结束递归。    if(preIndex&gt;preOrder.length-1||inStart&gt;InEnd){        return null;    }    // 按先序序列顺序创建根节点及子树根节点    TreeNode node = new TreeNode(preorder[preIndex]);    // 保存根节点在中序序列中的位置    int currIndex=0;    // 找到根节点在中序序列中的位置    for(int i=0;i&lt;inorder.length;i++){        if(inorder[i]==preorder[preIndex]){            currIndex=i;        }    }    // 递归创建左子树。根据先序遍历访问节点顺序root|left|right,可知左子树根节    // 点位于先序序列当前根节点位置右边第一个位置，即preIndex+1,整个左子树在中    // 序序列中的位置区间为当前中序序列起始位置到当前根节点在中序序列中的位置左边    // 第一个位置,即[inStart,currIndex-1]。    node.left = buildTree(preorder,inorder,preIndex+1,inStart,currIndex-1);    // 递归创建右子树。根据先序遍历访问节点顺序root|left|right,可知右子树根节    // 点位于先序序列当前根节点位置加上左子树节点个数再加一，左子树节点个数又等于    // 中序序列中根节点的位置减去当前起始位置即currIndex-inStart,因此右子树根    // 节点位置为preIndex+currIndex-inStart+1,整个右子树在中序序列中的位置    // 区间为当前根节点在中序序列中的位置加一到当前中序序列结束位置即    // [currIndex+1,inEnd]。    node.right = buildTree(preorder,inorder,preIndex+currIndex-inStart+1,currIndex+1,inEnd);    return node;}</code></pre><p>}<br><code>`</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;树是计算机领域经常用到的一种数据结构，因为树的定义是递归的，因此，树相关的算法也大都设计到递归求解。下面，我们针对树的常见算法进行一一解析。&lt;/p&gt;&lt;h1 id=&quot;根据二叉树的前序遍历序列与中序遍历序列构建二叉树&quot;&gt;&lt;a href=&quot;#根据二叉树的前序遍历序列与中序遍历序列
+      
+    
+    </summary>
+    
+      <category term="数据结构与算法" scheme="http://acmen.club/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="树" scheme="http://acmen.club/tags/%E6%A0%91/"/>
+    
+  </entry>
   
   <entry>
     <title>手撕单例模式</title>
